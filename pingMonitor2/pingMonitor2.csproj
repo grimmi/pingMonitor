@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LogEntry.cs" />
+    <Compile Include="Pinger.cs" />
     <Compile Include="pm2Form.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -120,6 +120,18 @@
   <data name="appClosing" xml:space="preserve">
     <value>Quitting PingMonitor...</value>
   </data>
+  <data name="btnStart" xml:space="preserve">
+    <value>start monitor</value>
+  </data>
+  <data name="btnStop" xml:space="preserve">
+    <value>stop monitor</value>
+  </data>
+  <data name="labelTarget" xml:space="preserve">
+    <value>Target:</value>
+  </data>
+  <data name="pingInterval" xml:space="preserve">
+    <value>Interval (in ms):</value>
+  </data>
   <data name="quitPingMonitor" xml:space="preserve">
     <value>Quit PingMonitor</value>
   </data>

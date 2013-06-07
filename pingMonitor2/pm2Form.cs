@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.Globalization;
 using System.Resources;
 using System.Diagnostics;
+using System.Threading;
+using System.Net.NetworkInformation;
 
 namespace pingMonitor2
 {
@@ -17,6 +19,8 @@ namespace pingMonitor2
     {
         ResourceManager rm;
         CultureInfo cul;
+        Thread pingThread;
+        Pinger p;
 
         public pm2Form()
         {
@@ -24,11 +28,14 @@ namespace pingMonitor2
             InitializeComponent();
             InitializeCulture();
             SetTexts();
+            p = new Pinger(f: this);
         }
 
         public void SetTexts()
         {
             btnExit.Text = rm.GetString("quitPingMonitor", cul);
+            btnStartStop.Text = rm.GetString("btnStart", cul);
+            labelTarget.Text = rm.GetString("labelTarget", cul);
             realtimeOutput.Text = rm.GetString("welcome", cul);
         }        
 
@@ -46,6 +53,43 @@ namespace pingMonitor2
             }
         }
 
+        public void updateStartBtn(object sender, EventArgs e)
+        {
+            if (btnStartStop.Text.Equals(rm.GetString("btnStart", cul)))
+            {
+                btnStartStop.Text = rm.GetString("btnStop", cul);
+            }
+            else
+            {
+                btnStartStop.Text = rm.GetString("btnStart", cul);
+            }
+        }
+
+        public void startstop(object sender, EventArgs e)
+        {
+            if (((Button)sender).Text.Equals(rm.GetString("btnStop", cul)))
+            {
+                // start pinging
+                p.target = inputHost.Text;
+                p.interval = (int)inputInterval.Value;
+                pingThread = new Thread(p.doPing);
+                pingThread.Start();
+            }
+            else
+            {
+                // stop pinging
+                if (pingThread != null)
+                {
+                    pingThread.Abort();
+                }
+            }
+        }
+
+        public void updateOutput()
+        {
+            realtimeOutput.AppendText(p.target+" || "+p.reply.RoundtripTime+"\n");
+        }
+
         // exit the app
         public void quit(object sender, EventArgs e)
         {
@@ -56,12 +100,23 @@ namespace pingMonitor2
         // all the stuff that needs to be done before we exit
         public void cleanup(object sender, EventArgs e)
         {
+            if (pingThread != null)
+            {
+                pingThread.Abort();
+            }
             //Debug.WriteLine(rm.GetString("appClosing", cul));
         }
 
         public void cleanup()
         {
             cleanup(null, null);
+        }
+
+        public bool isRunning(Thread t)
+        {
+            if(t != null)
+                return (t.ThreadState == System.Threading.ThreadState.Running);
+            return false;
         }
     }
 }
