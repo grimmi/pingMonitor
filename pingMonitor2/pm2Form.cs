@@ -56,7 +56,7 @@ namespace pingMonitor2
         // all the stuff that needs to be done before we exit
         public void cleanup(object sender, EventArgs e)
         {
-            Debug.WriteLine(rm.GetString("appClosing", cul));
+            //Debug.WriteLine(rm.GetString("appClosing", cul));
         }
 
         public void cleanup()
