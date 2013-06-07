@@ -13,10 +13,10 @@ namespace pingMonitor2
         public long roundTrip { get; set; }
         public string status { get; set; }
         public string host { get; set; }
-        public string? ip { get; set; }
-        public PingReply? reply { get; set; }
+        public string ip { get; set; }
+        public PingReply reply { get; set; }
 
-        LogEntry(DateTime date, string host, long roundTrip, string status, PingReply reply, string ip = "0.0.0.0")
+        public LogEntry(DateTime date, string host, long roundTrip, string status, PingReply reply, string ip = "0.0.0.0")
         {
             this.date = date;
             this.host = host;
@@ -26,7 +26,7 @@ namespace pingMonitor2
             this.ip = ip;
         }
 
-        LogEntry(string line)
+        public LogEntry(string line)
         {
             string[] parts = line.Split(';');
             this.date = DateTime.Parse(parts[0]);
@@ -37,11 +37,12 @@ namespace pingMonitor2
             {
                 this.ip = parts[4];
             }
+            this.reply = null;
         }
 
-        public string toString()
+        public string printExact()
         {
-            return String.Format("{0}: {1}", date.ToString("yyyy-MM-dd"), printReply());
+            return String.Format("{0}: {1}", date.ToString(), printReply());
         }
 
         public string printReply()

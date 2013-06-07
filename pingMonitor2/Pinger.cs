@@ -6,23 +6,23 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using pingMonitor2;
 
 namespace pingMonitor2
 {
     class Pinger
     {
         public string target { get; set; }
-        public PingReply reply { get; set; }
+        public PingReply r { get; set; }
         public Ping p { get; set; }
         public int interval { get; set; }
-        public List<PingReply> replies { get; set; }
         public pm2Form f;
+        public LogEntry l;
 
         public Pinger(pm2Form f, string t = "www.google.de", int i = 1000)
         {
             this.target = t;
             this.interval = i;
-            this.replies = new List<PingReply>();
             this.f = f;
         }
 
@@ -33,11 +33,12 @@ namespace pingMonitor2
             {
                 try
                 {
-                    reply = p.Send(this.target);
-                    replies.Add(reply);
+                    r = p.Send(this.target);
+                    l = new LogEntry(date: DateTime.Now,
+                                                host: this.target, roundTrip: r.RoundtripTime,
+                                                status: r.Status.ToString(), ip: r.Address.ToString(), reply: r);
                     System.Threading.Thread.Sleep(this.interval);
                     f.Invoke(new MethodInvoker(f.updateOutput));
-                    Debug.WriteLine(reply.Address + " || " + reply.RoundtripTime);
                 }
                 catch (Exception e)
                 {

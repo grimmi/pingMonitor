@@ -67,9 +67,12 @@ namespace pingMonitor2
 
         public void startstop(object sender, EventArgs e)
         {
+            changeEnabled();
             if (((Button)sender).Text.Equals(rm.GetString("btnStop", cul)))
             {
                 // start pinging
+                if(realtimeOutput.Text.Equals(rm.GetString("welcome",cul)))
+                    realtimeOutput.Text = "";
                 p.target = inputHost.Text;
                 p.interval = (int)inputInterval.Value;
                 pingThread = new Thread(p.doPing);
@@ -85,9 +88,15 @@ namespace pingMonitor2
             }
         }
 
+        public void changeEnabled()
+        {
+            inputHost.Enabled = !inputHost.Enabled;
+            inputInterval.Enabled = !inputInterval.Enabled;
+        }
+
         public void updateOutput()
         {
-            realtimeOutput.AppendText(p.target+" || "+p.reply.RoundtripTime+"\n");
+            realtimeOutput.AppendText(p.l.printExact()+"\n");
         }
 
         // exit the app
