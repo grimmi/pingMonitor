@@ -26,9 +26,18 @@ namespace pingMonitor2
             entries.ForEach(x => Debug.WriteLine(x.printLog()));
             if (entries.Count() > 0)
             {
-                this.minTime = entries.Where(x => x.roundTrip > 0).Min(x => x.roundTrip);
-                this.maxTime = entries.Max(x => x.roundTrip);
-                this.avgTime = entries.Average(x => x.roundTrip);
+                if ((entries.Where(x => x.roundTrip > 0).Count()) > 0)
+                {
+                    this.minTime = entries.Where(x => x.roundTrip > 0).Min(x => x.roundTrip);
+                    this.maxTime = entries.Where(x => x.roundTrip > 0).Max(x => x.roundTrip);
+                    this.avgTime = entries.Average(x => x.roundTrip);
+                }
+                else
+                {
+                    this.minTime = 0;
+                    this.maxTime = 0;
+                    this.avgTime = 0.0;
+                }
                 this.pingCount = entries.Count();
                 this.ips = entries.Select(x => x.ip).Distinct().ToList();
             }

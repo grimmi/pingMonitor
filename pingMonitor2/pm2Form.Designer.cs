@@ -30,21 +30,23 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.pageMonitor = new System.Windows.Forms.TabPage();
+            this.labelInterval = new System.Windows.Forms.Label();
             this.realtimeOutput = new System.Windows.Forms.TextBox();
+            this.inputInterval = new System.Windows.Forms.NumericUpDown();
+            this.btnStartStop = new System.Windows.Forms.Button();
+            this.labelTarget = new System.Windows.Forms.Label();
+            this.inputHost = new System.Windows.Forms.ComboBox();
             this.pageStats = new System.Windows.Forms.TabPage();
+            this.outputStats = new System.Windows.Forms.TextBox();
             this.pageGraph = new System.Windows.Forms.TabPage();
             this.btnExit = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.btnStartStop = new System.Windows.Forms.Button();
-            this.inputHost = new System.Windows.Forms.ComboBox();
-            this.labelTarget = new System.Windows.Forms.Label();
-            this.inputInterval = new System.Windows.Forms.NumericUpDown();
-            this.labelInterval = new System.Windows.Forms.Label();
-            this.outputStats = new System.Windows.Forms.TextBox();
+            this.statusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl1.SuspendLayout();
             this.pageMonitor.SuspendLayout();
-            this.pageStats.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inputInterval)).BeginInit();
+            this.pageStats.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -61,7 +63,12 @@
             // 
             // pageMonitor
             // 
+            this.pageMonitor.Controls.Add(this.labelInterval);
             this.pageMonitor.Controls.Add(this.realtimeOutput);
+            this.pageMonitor.Controls.Add(this.inputInterval);
+            this.pageMonitor.Controls.Add(this.btnStartStop);
+            this.pageMonitor.Controls.Add(this.labelTarget);
+            this.pageMonitor.Controls.Add(this.inputHost);
             this.pageMonitor.Location = new System.Drawing.Point(4, 22);
             this.pageMonitor.Name = "pageMonitor";
             this.pageMonitor.Padding = new System.Windows.Forms.Padding(3);
@@ -69,6 +76,15 @@
             this.pageMonitor.TabIndex = 0;
             this.pageMonitor.Text = "Monitor";
             this.pageMonitor.UseVisualStyleBackColor = true;
+            // 
+            // labelInterval
+            // 
+            this.labelInterval.AutoSize = true;
+            this.labelInterval.Location = new System.Drawing.Point(201, 277);
+            this.labelInterval.Name = "labelInterval";
+            this.labelInterval.Size = new System.Drawing.Size(80, 13);
+            this.labelInterval.TabIndex = 7;
+            this.labelInterval.Text = "Intervall (in ms):";
             // 
             // realtimeOutput
             // 
@@ -78,8 +94,58 @@
             this.realtimeOutput.Name = "realtimeOutput";
             this.realtimeOutput.ReadOnly = true;
             this.realtimeOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.realtimeOutput.Size = new System.Drawing.Size(677, 291);
+            this.realtimeOutput.Size = new System.Drawing.Size(677, 262);
             this.realtimeOutput.TabIndex = 0;
+            // 
+            // inputInterval
+            // 
+            this.inputInterval.Location = new System.Drawing.Point(287, 275);
+            this.inputInterval.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.inputInterval.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.inputInterval.Name = "inputInterval";
+            this.inputInterval.Size = new System.Drawing.Size(62, 20);
+            this.inputInterval.TabIndex = 6;
+            this.inputInterval.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            // 
+            // btnStartStop
+            // 
+            this.btnStartStop.Location = new System.Drawing.Point(570, 272);
+            this.btnStartStop.Name = "btnStartStop";
+            this.btnStartStop.Size = new System.Drawing.Size(114, 23);
+            this.btnStartStop.TabIndex = 3;
+            this.btnStartStop.Text = "Monitor starten";
+            this.btnStartStop.UseVisualStyleBackColor = true;
+            this.btnStartStop.Click += new System.EventHandler(this.updateStartBtn);
+            // 
+            // labelTarget
+            // 
+            this.labelTarget.AutoSize = true;
+            this.labelTarget.Location = new System.Drawing.Point(355, 277);
+            this.labelTarget.Name = "labelTarget";
+            this.labelTarget.Size = new System.Drawing.Size(27, 13);
+            this.labelTarget.TabIndex = 5;
+            this.labelTarget.Text = "Ziel:";
+            // 
+            // inputHost
+            // 
+            this.inputHost.FormattingEnabled = true;
+            this.inputHost.Location = new System.Drawing.Point(385, 274);
+            this.inputHost.Name = "inputHost";
+            this.inputHost.Size = new System.Drawing.Size(179, 21);
+            this.inputHost.TabIndex = 4;
+            this.inputHost.Text = "www.google.de";
             // 
             // pageStats
             // 
@@ -91,6 +157,15 @@
             this.pageStats.TabIndex = 1;
             this.pageStats.Text = "Statistik";
             this.pageStats.UseVisualStyleBackColor = true;
+            // 
+            // outputStats
+            // 
+            this.outputStats.Location = new System.Drawing.Point(7, 7);
+            this.outputStats.Multiline = true;
+            this.outputStats.Name = "outputStats";
+            this.outputStats.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.outputStats.Size = new System.Drawing.Size(677, 288);
+            this.outputStats.TabIndex = 0;
             // 
             // pageGraph
             // 
@@ -113,91 +188,25 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusLabel1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 379);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(723, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // btnStartStop
+            // statusLabel1
             // 
-            this.btnStartStop.Location = new System.Drawing.Point(470, 343);
-            this.btnStartStop.Name = "btnStartStop";
-            this.btnStartStop.Size = new System.Drawing.Size(114, 23);
-            this.btnStartStop.TabIndex = 3;
-            this.btnStartStop.Text = "Monitor starten";
-            this.btnStartStop.UseVisualStyleBackColor = true;
-            this.btnStartStop.Click += new System.EventHandler(this.startstop);
-            this.btnStartStop.Click += new System.EventHandler(this.updateStartBtn);
-            // 
-            // inputHost
-            // 
-            this.inputHost.FormattingEnabled = true;
-            this.inputHost.Location = new System.Drawing.Point(285, 345);
-            this.inputHost.Name = "inputHost";
-            this.inputHost.Size = new System.Drawing.Size(179, 21);
-            this.inputHost.TabIndex = 4;
-            this.inputHost.Text = "www.google.de";
-            // 
-            // labelTarget
-            // 
-            this.labelTarget.AutoSize = true;
-            this.labelTarget.Location = new System.Drawing.Point(255, 348);
-            this.labelTarget.Name = "labelTarget";
-            this.labelTarget.Size = new System.Drawing.Size(27, 13);
-            this.labelTarget.TabIndex = 5;
-            this.labelTarget.Text = "Ziel:";
-            // 
-            // inputInterval
-            // 
-            this.inputInterval.Location = new System.Drawing.Point(187, 346);
-            this.inputInterval.Maximum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-            this.inputInterval.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.inputInterval.Name = "inputInterval";
-            this.inputInterval.Size = new System.Drawing.Size(62, 20);
-            this.inputInterval.TabIndex = 6;
-            this.inputInterval.Value = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            // 
-            // labelInterval
-            // 
-            this.labelInterval.AutoSize = true;
-            this.labelInterval.Location = new System.Drawing.Point(101, 348);
-            this.labelInterval.Name = "labelInterval";
-            this.labelInterval.Size = new System.Drawing.Size(80, 13);
-            this.labelInterval.TabIndex = 7;
-            this.labelInterval.Text = "Intervall (in ms):";
-            // 
-            // outputStats
-            // 
-            this.outputStats.Location = new System.Drawing.Point(7, 7);
-            this.outputStats.Multiline = true;
-            this.outputStats.Name = "outputStats";
-            this.outputStats.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.outputStats.Size = new System.Drawing.Size(677, 288);
-            this.outputStats.TabIndex = 0;
+            this.statusLabel1.Name = "statusLabel1";
+            this.statusLabel1.Size = new System.Drawing.Size(118, 17);
+            this.statusLabel1.Text = "toolStripStatusLabel1";
             // 
             // pm2Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(723, 401);
-            this.Controls.Add(this.labelInterval);
-            this.Controls.Add(this.inputInterval);
-            this.Controls.Add(this.labelTarget);
-            this.Controls.Add(this.inputHost);
-            this.Controls.Add(this.btnStartStop);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.tabControl1);
@@ -207,9 +216,11 @@
             this.tabControl1.ResumeLayout(false);
             this.pageMonitor.ResumeLayout(false);
             this.pageMonitor.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.inputInterval)).EndInit();
             this.pageStats.ResumeLayout(false);
             this.pageStats.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.inputInterval)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -230,6 +241,7 @@
         private System.Windows.Forms.NumericUpDown inputInterval;
         private System.Windows.Forms.Label labelInterval;
         private System.Windows.Forms.TextBox outputStats;
+        private System.Windows.Forms.ToolStripStatusLabel statusLabel1;
     }
 }
 

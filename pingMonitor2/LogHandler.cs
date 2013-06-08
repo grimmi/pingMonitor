@@ -48,6 +48,7 @@ namespace pingMonitor2
                         LogEntry l = new LogEntry(line);
                         entries.Add(l);
                     }
+                    sr.Close();
                 }
             }
             return entries;
@@ -94,6 +95,7 @@ namespace pingMonitor2
                             entries.Add(l);
                         }
                     }
+                    sr.Close();
                 }
             }
             return entries;
@@ -148,6 +150,7 @@ namespace pingMonitor2
                             hosts.Add(tmpHost);
                         }
                     }
+                    sr.Close();
                 }
             }
             return hosts;

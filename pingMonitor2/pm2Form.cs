@@ -22,6 +22,10 @@ namespace pingMonitor2
         Thread pingThread;
         Pinger p;
         Statistics s;
+        List<HostStatistics> hostStatistics;
+        bool newData;
+        bool statsLoaded;
+        bool pingRunning;
 
         public pm2Form()
         {
@@ -31,6 +35,10 @@ namespace pingMonitor2
             SetTexts();
             p = new Pinger(f: this);
             s = new Statistics();
+            hostStatistics = s.getAllHostStatistics();
+            newData = false;
+            statsLoaded = false;
+            pingRunning = false;
         }
 
         public void SetTexts()
@@ -69,9 +77,9 @@ namespace pingMonitor2
 
         public void startstop(object sender, EventArgs e)
         {
-            Debug.Write("los geht's!");
             changeEnabled();
-            if (((Button)sender).Text.Equals(rm.GetString("btnStart", cul)))
+            newData = true;
+            if (!pingRunning)
             {
                 // start pinging
                 if(realtimeOutput.Text.Equals(rm.GetString("welcome",cul)))
@@ -80,9 +88,11 @@ namespace pingMonitor2
                 p.interval = (int)inputInterval.Value;
                 pingThread = new Thread(p.doPing);
                 pingThread.Start();
+                pingRunning = true;
             }
             else
             {
+                pingRunning = false;
                 // stop pinging
                 if (pingThread != null)
                 {
@@ -104,10 +114,13 @@ namespace pingMonitor2
 
         public void updateStatsOutput(List<HostStatistics> hostStats)
         {
+            outputStats.Clear();
+            
             if (hostStats.Count() > 0)
             {
                 hostStats.ForEach(x => outputStats.AppendText(x.print()));
             }
+            statsLoaded = true;
         }
 
         // exit the app
@@ -146,7 +159,12 @@ namespace pingMonitor2
                 case 0: // monitor
                     break;
                 case 1: // stats
-                    updateStatsOutput(s.getAllHostStatistics());
+                    if (newData)
+                    {
+                        hostStatistics = s.getAllHostStatistics();
+                    }
+                    updateStatsOutput(hostStatistics);
+                    newData = false;
                     break;
                 case 2: // charts
                     break;
