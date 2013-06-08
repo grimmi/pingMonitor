@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using pingMonitor2;
+using System.IO;
 
 namespace pingMonitor2
 {
@@ -19,6 +20,8 @@ namespace pingMonitor2
         public pm2Form f;
         public LogEntry l;
         public Exception ex;
+
+        string dirPath = Environment.SpecialFolder.MyDocuments.ToString();
 
         private string NOCONNECTION = "No Connection";
 
@@ -52,8 +55,26 @@ namespace pingMonitor2
                     f.Invoke(new MethodInvoker(f.updateOutput));
                     Debug.WriteLine(e);
                 }
+                if (l != null)
+                {
+                    logToFile(l);
+                }
                 System.Threading.Thread.Sleep(this.interval);
             }
+        }
+
+        public void logToFile(LogEntry l)
+        {
+            string fileToday = DateTime.Now.ToString("yyyy-MM-dd") + "-pmLog.txt";
+            string path = System.IO.Path.Combine(dirPath, fileToday);
+            StreamWriter sw;
+            if (!Directory.Exists(dirPath))
+            {
+                Directory.CreateDirectory(dirPath);
+            }
+            sw = new StreamWriter(path,true);
+            sw.WriteLine(l.printLog());
+            sw.Close();
         }
 
     }

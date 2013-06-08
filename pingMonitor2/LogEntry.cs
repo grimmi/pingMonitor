@@ -54,5 +54,12 @@ namespace pingMonitor2
             string ret = String.Format("{0}: {1} ( {2} ms )", host, status, time);
             return ret;
         }
+
+        public string printLog()
+        {
+            string log = String.Format("{0};{1};{2};{3};{4};{5}",
+                                this.date.ToString(), this.host, this.status, this.roundTrip, this.ip, "");
+            return log;
+        }
     }
 }
