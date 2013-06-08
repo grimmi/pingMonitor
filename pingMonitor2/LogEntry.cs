@@ -14,9 +14,10 @@ namespace pingMonitor2
         public string status { get; set; }
         public string host { get; set; }
         public string ip { get; set; }
+        public string error { get; set; }
         public PingReply reply { get; set; }
 
-        public LogEntry(DateTime date, string host, long roundTrip, string status, PingReply reply, string ip = "0.0.0.0")
+        public LogEntry(DateTime date, string host, long roundTrip, string status, PingReply reply, string ip = "0.0.0.0", string error = "")
         {
             this.date = date;
             this.host = host;
@@ -24,6 +25,7 @@ namespace pingMonitor2
             this.status = status;
             this.reply = reply;
             this.ip = ip;
+            this.error = error;
         }
 
         public LogEntry(string line)
@@ -33,10 +35,8 @@ namespace pingMonitor2
             this.status = parts[1];
             this.roundTrip = long.Parse(parts[2]);
             this.host = parts[3];
-            if (parts.Count() > 4)
-            {
-                this.ip = parts[4];
-            }
+            this.ip = parts[4];
+            this.error = parts[5];
             this.reply = null;
         }
 

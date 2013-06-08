@@ -129,6 +129,9 @@
   <data name="labelTarget" xml:space="preserve">
     <value>Ziel:</value>
   </data>
+  <data name="pingException" xml:space="preserve">
+    <value>Es ist ein Fehler aufgetreten bei Ping an {0}</value>
+  </data>
   <data name="pingInterval" xml:space="preserve">
     <value>Intervall (in ms):</value>
   </data>

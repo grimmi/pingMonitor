@@ -96,7 +96,7 @@ namespace pingMonitor2
 
         public void updateOutput()
         {
-            realtimeOutput.AppendText(p.l.printExact()+"\n");
+            realtimeOutput.AppendText(p.l.printExact() + "\n");
         }
 
         // exit the app
