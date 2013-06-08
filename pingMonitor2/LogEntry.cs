@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace pingMonitor2
 {
-    class LogEntry
+    public class LogEntry
     {
         public DateTime date { get; set; }
         public long roundTrip { get; set; }
@@ -32,11 +33,12 @@ namespace pingMonitor2
         {
             string[] parts = line.Split(';');
             this.date = DateTime.Parse(parts[0]);
-            this.status = parts[1];
-            this.roundTrip = long.Parse(parts[2]);
-            this.host = parts[3];
+            this.host = parts[1];
+            this.status = parts[2];
+            this.roundTrip = long.Parse(parts[3]);
+            Debug.WriteLine(this.roundTrip);
             this.ip = parts[4];
-            this.error = parts[5];
+            this.error = "";
             this.reply = null;
         }
 

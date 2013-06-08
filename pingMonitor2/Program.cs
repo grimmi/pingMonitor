@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace pingMonitor2
 {
-    static class Program
+    public static class Program
     {
         /// <summary>
         /// Der Haupteinstiegspunkt für die Anwendung.

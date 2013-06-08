@@ -44,7 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HostStatistics.cs" />
     <Compile Include="LogEntry.cs" />
+    <Compile Include="LogHandler.cs" />
     <Compile Include="Pinger.cs" />
     <Compile Include="pm2Form.cs">
       <SubType>Form</SubType>
@@ -64,6 +66,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Res.en.resx</DependentUpon>
     </Compile>
+    <Compile Include="Statistics.cs" />
     <EmbeddedResource Include="pm2Form.resx">
       <DependentUpon>pm2Form.cs</DependentUpon>
     </EmbeddedResource>

@@ -21,6 +21,7 @@ namespace pingMonitor2
         CultureInfo cul;
         Thread pingThread;
         Pinger p;
+        Statistics s;
 
         public pm2Form()
         {
@@ -29,6 +30,7 @@ namespace pingMonitor2
             InitializeCulture();
             SetTexts();
             p = new Pinger(f: this);
+            s = new Statistics();
         }
 
         public void SetTexts()
@@ -67,8 +69,9 @@ namespace pingMonitor2
 
         public void startstop(object sender, EventArgs e)
         {
+            Debug.Write("los geht's!");
             changeEnabled();
-            if (((Button)sender).Text.Equals(rm.GetString("btnStop", cul)))
+            if (((Button)sender).Text.Equals(rm.GetString("btnStart", cul)))
             {
                 // start pinging
                 if(realtimeOutput.Text.Equals(rm.GetString("welcome",cul)))
@@ -94,9 +97,17 @@ namespace pingMonitor2
             inputInterval.Enabled = !inputInterval.Enabled;
         }
 
-        public void updateOutput()
+        public void updateRealTimeOutput()
         {
             realtimeOutput.AppendText(p.l.printExact() + "\n");
+        }
+
+        public void updateStatsOutput(List<HostStatistics> hostStats)
+        {
+            if (hostStats.Count() > 0)
+            {
+                hostStats.ForEach(x => outputStats.AppendText(x.print()));
+            }
         }
 
         // exit the app
@@ -126,6 +137,21 @@ namespace pingMonitor2
             if(t != null)
                 return (t.ThreadState == System.Threading.ThreadState.Running);
             return false;
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (tabControl1.SelectedIndex)
+            {
+                case 0: // monitor
+                    break;
+                case 1: // stats
+                    updateStatsOutput(s.getAllHostStatistics());
+                    break;
+                case 2: // charts
+                    break;
+                default: break;
+            }
         }
     }
 }

@@ -40,8 +40,10 @@
             this.labelTarget = new System.Windows.Forms.Label();
             this.inputInterval = new System.Windows.Forms.NumericUpDown();
             this.labelInterval = new System.Windows.Forms.Label();
+            this.outputStats = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.pageMonitor.SuspendLayout();
+            this.pageStats.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inputInterval)).BeginInit();
             this.SuspendLayout();
             // 
@@ -55,6 +57,7 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(698, 327);
             this.tabControl1.TabIndex = 0;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // pageMonitor
             // 
@@ -80,6 +83,7 @@
             // 
             // pageStats
             // 
+            this.pageStats.Controls.Add(this.outputStats);
             this.pageStats.Location = new System.Drawing.Point(4, 22);
             this.pageStats.Name = "pageStats";
             this.pageStats.Padding = new System.Windows.Forms.Padding(3);
@@ -123,8 +127,8 @@
             this.btnStartStop.TabIndex = 3;
             this.btnStartStop.Text = "Monitor starten";
             this.btnStartStop.UseVisualStyleBackColor = true;
-            this.btnStartStop.Click += new System.EventHandler(this.updateStartBtn);
             this.btnStartStop.Click += new System.EventHandler(this.startstop);
+            this.btnStartStop.Click += new System.EventHandler(this.updateStartBtn);
             // 
             // inputHost
             // 
@@ -175,6 +179,15 @@
             this.labelInterval.TabIndex = 7;
             this.labelInterval.Text = "Intervall (in ms):";
             // 
+            // outputStats
+            // 
+            this.outputStats.Location = new System.Drawing.Point(7, 7);
+            this.outputStats.Multiline = true;
+            this.outputStats.Name = "outputStats";
+            this.outputStats.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.outputStats.Size = new System.Drawing.Size(677, 288);
+            this.outputStats.TabIndex = 0;
+            // 
             // pm2Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -194,6 +207,8 @@
             this.tabControl1.ResumeLayout(false);
             this.pageMonitor.ResumeLayout(false);
             this.pageMonitor.PerformLayout();
+            this.pageStats.ResumeLayout(false);
+            this.pageStats.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inputInterval)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -214,6 +229,7 @@
         private System.Windows.Forms.Label labelTarget;
         private System.Windows.Forms.NumericUpDown inputInterval;
         private System.Windows.Forms.Label labelInterval;
+        private System.Windows.Forms.TextBox outputStats;
     }
 }
 
