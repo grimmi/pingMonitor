@@ -128,6 +128,7 @@
             this.btnStartStop.Text = "Monitor starten";
             this.btnStartStop.UseVisualStyleBackColor = true;
             this.btnStartStop.Click += new System.EventHandler(this.updateStartBtn);
+            this.btnStartStop.Click += new System.EventHandler(this.startstop);
             // 
             // labelTarget
             // 
@@ -200,7 +201,7 @@
             // 
             this.statusLabel1.Name = "statusLabel1";
             this.statusLabel1.Size = new System.Drawing.Size(118, 17);
-            this.statusLabel1.Text = "toolStripStatusLabel1";
+            this.statusLabel1.Text = "";
             // 
             // pm2Form
             // 

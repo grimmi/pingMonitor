@@ -24,8 +24,8 @@ namespace pingMonitor2
         Statistics s;
         List<HostStatistics> hostStatistics;
         bool newData;
-        bool statsLoaded;
         bool pingRunning;
+        LogHandler lh;
 
         public pm2Form()
         {
@@ -37,7 +37,6 @@ namespace pingMonitor2
             s = new Statistics();
             hostStatistics = s.getAllHostStatistics();
             newData = false;
-            statsLoaded = false;
             pingRunning = false;
         }
 
@@ -120,7 +119,11 @@ namespace pingMonitor2
             {
                 hostStats.ForEach(x => outputStats.AppendText(x.print()));
             }
-            statsLoaded = true;
+        }
+
+        public void showTimeSpans(List<HostStatistics> hostStats)
+        {
+
         }
 
         // exit the app
@@ -159,11 +162,14 @@ namespace pingMonitor2
                 case 0: // monitor
                     break;
                 case 1: // stats
+                    /*
                     if (newData)
                     {
                         hostStatistics = s.getAllHostStatistics();
                     }
                     updateStatsOutput(hostStatistics);
+                     */
+                    showTimeSpans(s.getAllHostStatistics());
                     newData = false;
                     break;
                 case 2: // charts

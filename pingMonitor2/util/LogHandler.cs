@@ -12,6 +12,12 @@ namespace pingMonitor2
     {
         string dirPath = Environment.SpecialFolder.MyDocuments.ToString();
         string dateFormat = "yyyy-MM-dd";
+        List<LogEntry> entries;
+
+        public LogHandler()
+        {
+            this.entries = getAllEntries();
+        }
 
         public void writeEntryToLog(LogEntry entry)
         {
@@ -155,6 +161,8 @@ namespace pingMonitor2
             }
             return hosts;
         }
+
+        
 
         public string constructFileName(string date)
         {
