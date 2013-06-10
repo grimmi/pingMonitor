@@ -129,6 +129,10 @@
   <data name="labelTarget" xml:space="preserve">
     <value>Ziel:</value>
   </data>
+  <data name="periodPrint" xml:space="preserve">
+    <value>{0} - {1} ( {2:0.00} Minuten )
+{3} Einträge für {4} mit Status: {5}</value>
+  </data>
   <data name="pingException" xml:space="preserve">
     <value>Es ist ein Fehler aufgetreten bei Ping an {0}</value>
   </data>

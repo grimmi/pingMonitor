@@ -16,7 +16,7 @@ namespace pingMonitor2
 
         public LogHandler()
         {
-            this.entries = getAllEntries();
+            //this.entries = getAllEntries();
         }
 
         public void writeEntryToLog(LogEntry entry)
@@ -44,7 +44,7 @@ namespace pingMonitor2
             List<LogEntry> entries = new List<LogEntry>();
             if (Directory.Exists(dirPath))
             {
-                string path = System.IO.Path.Combine(dirPath, day, ".txt");
+                string path = constructFileName(day);
                 if (File.Exists(path))
                 {
                     StreamReader sr = new StreamReader(path);
@@ -69,7 +69,6 @@ namespace pingMonitor2
                 for (int i = 0; i < logFiles.Count(); i++)
                 {
                     string day = System.IO.Path.GetFileName(logFiles[i]).Substring(0,10);
-                    Debug.WriteLine("getLogByHost FileName: " + day);
                     entries.AddRange(getLogEntriesByDayAndHost(host, day));
                 }
             }
@@ -115,7 +114,7 @@ namespace pingMonitor2
                 string[] files = Directory.GetFiles(dirPath);
                 for (int i = 0; i < files.Count(); i++)
                 {
-                    string day = files[i].Substring(0, 10);
+                    string day = System.IO.Path.GetFileName(files[i]).Substring(0, 10);
                     entries.AddRange(getLogEntriesByDay(day));
                 }
             }
@@ -162,11 +161,39 @@ namespace pingMonitor2
             return hosts;
         }
 
-        
+        public List<Period> getPeriods(List<LogEntry> entries)
+        {
+            List<Period> periods = new List<Period>();
+            if (entries.Count() > 0)
+            {
+                string statusPre = entries[0].status;
+                string hostPre = entries[0].host;
+                DateTime start = entries[0].date;
+                int periodCount = 1;
+                for (int i = 1; i < entries.Count(); i++)
+                {
+                    LogEntry l = entries[i];
+                    if (!l.status.Equals(statusPre) || !l.host.Equals(hostPre) || !l.date.ToString(dateFormat).Equals(start.ToString(dateFormat)))
+                    {
+                        Period p = new Period(start: start, end: entries[i - 1].date, status: entries[i - 1].status, host: hostPre, count: periodCount);
+                        periods.Add(p);
+                        start = l.date;
+                        statusPre = l.status;
+                        hostPre = l.host;
+                        periodCount = 1;
+                    }
+                    else
+                    {
+                        periodCount++;
+                    }
+                }
+            }
+            return periods;
+        }
 
         public string constructFileName(string date)
         {
-            return date + "-pmLog.txt";
+            return System.IO.Path.Combine(dirPath,date + "-pmLog.txt");
         }
     }
 }

@@ -35,7 +35,8 @@ namespace pingMonitor2
             SetTexts();
             p = new Pinger(f: this);
             s = new Statistics();
-            hostStatistics = s.getAllHostStatistics();
+            lh = new LogHandler();
+            //hostStatistics = s.getAllHostStatistics();
             newData = false;
             pingRunning = false;
         }
@@ -121,9 +122,10 @@ namespace pingMonitor2
             }
         }
 
-        public void showTimeSpans(List<HostStatistics> hostStats)
+        public void showTimeSpans(List<LogEntry> entries)
         {
-
+            List<Period> periods = lh.getPeriods(entries);
+            periods.ForEach(x => outputStats.AppendText(printPeriod(x) + "\r\n"));
         }
 
         // exit the app
@@ -169,13 +171,19 @@ namespace pingMonitor2
                     }
                     updateStatsOutput(hostStatistics);
                      */
-                    showTimeSpans(s.getAllHostStatistics());
+                    showTimeSpans(lh.getAllEntries());
                     newData = false;
                     break;
                 case 2: // charts
                     break;
                 default: break;
             }
+        }        
+
+        public string printPeriod(Period p)
+        {
+            string ret = String.Format(rm.GetString("periodPrint",cul), p.start.ToString(), p.end.ToString(), p.getTimeSpan().TotalMinutes, p.count, p.host, p.status);
+            return ret;
         }
     }
 }

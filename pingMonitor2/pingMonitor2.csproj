@@ -44,10 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HostStatistics.cs" />
-    <Compile Include="LogEntry.cs" />
-    <Compile Include="LogHandler.cs" />
-    <Compile Include="Pinger.cs" />
+    <Compile Include="util\HostStatistics.cs" />
+    <Compile Include="util\LogEntry.cs" />
+    <Compile Include="util\LogHandler.cs" />
+    <Compile Include="util\Period.cs" />
+    <Compile Include="util\Pinger.cs" />
     <Compile Include="pm2Form.cs">
       <SubType>Form</SubType>
     </Compile>

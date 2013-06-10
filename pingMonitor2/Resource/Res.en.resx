@@ -129,6 +129,10 @@
   <data name="labelTarget" xml:space="preserve">
     <value>Target:</value>
   </data>
+  <data name="periodPrint" xml:space="preserve">
+    <value>{0} - {1} ( {2:0.00} minutes )
+{3} entries for {4} with status: {5}</value>
+  </data>
   <data name="pingException" xml:space="preserve">
     <value>There occured an error pinging {0}</value>
   </data>
